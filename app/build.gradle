@@ -1,0 +1,36 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+mainClassName = 'com.example.App'
+
+repositories {
+    jcenter()
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+dependencies {
+    implementation 'com.google.code.gson:gson:2.8.9'
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.example.App'
+    }
+
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+
+
+    archiveFileName = 'myname.jar'
+}
+
+tasks.register('wrapper', Wrapper) {
+    gradleVersion = '8.1.1'
+}
